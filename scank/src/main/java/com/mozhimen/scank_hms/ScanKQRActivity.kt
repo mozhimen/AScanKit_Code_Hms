@@ -1,4 +1,4 @@
-package com.mozhimen.sankit
+package com.mozhimen.scank_hms
 
 import android.Manifest
 import android.app.Activity
@@ -14,7 +14,7 @@ import com.mozhimen.basick.extsk.toJson
 import com.mozhimen.basick.utilk.UtilKScreen
 import com.mozhimen.componentk.permissionk.PermissionK
 import com.mozhimen.componentk.permissionk.annors.PermissionKAnnor
-import com.mozhimen.sankit.databinding.ScankQrActivityBinding
+import com.mozhimen.scank_hms.databinding.ScankQrActivityBinding
 
 @PermissionKAnnor(permissions = [Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE])
 class ScanKQRActivity : BaseKActivityVB<ScankQrActivityBinding>() {

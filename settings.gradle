@@ -11,4 +11,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "ScanKit_Hms"
 include ':app'
-include ':sankit'
+include ':scank'

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mozhimen.sankit">
+    package="com.mozhimen.scank_hms">
 
     <!--相机权限-->
     <uses-permission android:name="android.permission.CAMERA" />
@@ -12,10 +12,10 @@
 
     <application>
         <activity
-            android:name=".ScanKQR2Activity"
+            android:name="com.mozhimen.scank_hms.ScanKQR2Activity"
             android:exported="true" />
         <activity
-            android:name=".ScanKQRActivity"
+            android:name="com.mozhimen.scank_hms.ScanKQRActivity"
             android:exported="true" />
     </application>
 </manifest>

@@ -9,8 +9,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.huawei.hms.ml.scan.HmsScan
 import com.mozhimen.basick.basek.BaseKActivityVB
 import com.mozhimen.basick.extsk.fromJson
-import com.mozhimen.sankit.ScanKQR2Activity
-import com.mozhimen.sankit.ScanKQRActivity
+import com.mozhimen.scank_hms.ScanKQR2Activity
+import com.mozhimen.scank_hms.ScanKQRActivity
 import com.mozhimen.scankit.databinding.ActivityMainBinding
 
 class MainActivity : BaseKActivityVB<ActivityMainBinding>() {
