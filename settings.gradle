@@ -9,6 +9,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "ScanKit_Hms"
+rootProject.name = "ScanKit_Hms_Code"
 include ':app'
-include ':scank'
+include ':scank_hms_code'

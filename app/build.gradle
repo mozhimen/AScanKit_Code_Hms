@@ -33,9 +33,13 @@ android {
 
 dependencies {
 
-    implementation 'com.github.mozhimen.SwiftKit:basick:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation project(path: ':scank')
+    implementation 'com.github.mozhimen.SwiftKit:basick:1.2.3'
+    implementation 'com.github.mozhimen.SwiftKit:componentk:1.2.3'
+    implementation 'com.github.mozhimen.SwiftKit:uicorek:1.2.3'
+
+    implementation project(path: ':scank_hms_code')
+
+    //test
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

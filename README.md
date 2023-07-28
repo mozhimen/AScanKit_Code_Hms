@@ -1,2 +1,2 @@
 # ScanKit_Hms
-集成Hms ScanKit的Android扫码工具库
+Android扫描组件 -> 识别码(二维码,条形码)

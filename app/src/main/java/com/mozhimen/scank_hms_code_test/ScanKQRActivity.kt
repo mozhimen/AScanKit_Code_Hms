@@ -1,6 +1,5 @@
-package com.mozhimen.scank_hms
+package com.mozhimen.scank_hms_code_test
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Rect
@@ -9,15 +8,13 @@ import android.text.TextUtils
 import android.widget.FrameLayout
 import com.huawei.hms.hmsscankit.RemoteView
 import com.huawei.hms.ml.scan.HmsScan
-import com.mozhimen.basick.basek.BaseKActivityVB
-import com.mozhimen.basick.extsk.toJson
-import com.mozhimen.basick.utilk.UtilKScreen
-import com.mozhimen.componentk.permissionk.PermissionK
-import com.mozhimen.componentk.permissionk.annors.PermissionKAnnor
-import com.mozhimen.scank_hms.databinding.ScankQrActivityBinding
+import com.mozhimen.basick.elemk.androidx.appcompat.bases.BaseActivityVB
+import com.mozhimen.basick.manifestk.cons.CPermission
+import com.mozhimen.basick.manifestk.permission.annors.APermissionCheck
+import com.mozhimen.scank_hms_code_test.databinding.ScankQrActivityBinding
 
-@PermissionKAnnor(permissions = [Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE])
-class ScanKQRActivity : BaseKActivityVB<ScankQrActivityBinding>() {
+@APermissionCheck(CPermission.CAMERA, CPermission.READ_EXTERNAL_STORAGE)
+class ScanKQRActivity : BaseActivityVB<ScankQrActivityBinding>() {
     companion object {
         const val SCANK_ACTIVITY_RESULT_PARAM = "SCANK_ACTIVITY_RESULT_PARAM"
     }
@@ -28,7 +25,7 @@ class ScanKQRActivity : BaseKActivityVB<ScankQrActivityBinding>() {
     override fun initData(savedInstanceState: Bundle?) {
         PermissionK.initPermissions(this) {
             if (it) {
-                initView(savedInstanceState)
+                super.initData(savedInstanceState)
             } else {
                 PermissionK.applySetting(this)
             }

@@ -1,4 +1,4 @@
-package com.mozhimen.scank_hms
+package com.mozhimen.scank_hms_code_test
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -22,7 +22,7 @@ import com.mozhimen.componentk.cameraxk.annors.CameraXKFacing
 import com.mozhimen.componentk.cameraxk.helpers.ImageConverter
 import com.mozhimen.componentk.permissionk.PermissionK
 import com.mozhimen.componentk.permissionk.annors.PermissionKAnnor
-import com.mozhimen.scank_hms.databinding.ScankQr2ActivityBinding
+import com.mozhimen.scank_hms_code.databinding.ScankQr2ActivityBinding
 import java.util.concurrent.locks.ReentrantLock
 
 @PermissionKAnnor(permissions = [Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE])

@@ -36,11 +36,6 @@ android {
 }
 
 dependencies {
-
-    implementation 'com.github.mozhimen.SwiftKit:basick:1.2.0'
-    implementation 'com.github.mozhimen.SwiftKit:componentk:1.2.0'
-    implementation 'com.github.mozhimen.SwiftKit:uicorek:1.2.0'
-
     //scank
     api 'com.huawei.hms:scanplus:2.5.0.300'
 
