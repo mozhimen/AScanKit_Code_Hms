@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    compileSdk  rootProject.android.compileSdk
+    compileSdk rootProject.android.compileSdk
 
     defaultConfig {
         applicationId rootProject.android.applicationId
@@ -32,12 +32,11 @@ android {
 }
 
 dependencies {
+    implementation project(':SwiftKit:basick')
+    implementation project(':SwiftKit:componentk')
+    implementation project(':SwiftKit:uicorek')
 
-    implementation 'com.github.mozhimen.SwiftKit:basick:1.2.3'
-    implementation 'com.github.mozhimen.SwiftKit:componentk:1.2.3'
-    implementation 'com.github.mozhimen.SwiftKit:uicorek:1.2.3'
-
-    implementation project(path: ':scank_hms_code')
+    implementation project(':scank_hms_code')
 
     //test
     testImplementation 'junit:junit:4.13.2'

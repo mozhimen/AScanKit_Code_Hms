@@ -12,3 +12,11 @@ dependencyResolutionManagement {
 rootProject.name = "ScanKit_Hms_Code"
 include ':app'
 include ':scank_hms_code'
+include ':SwiftKit'
+project(':SwiftKit').projectDir = new File("C:\\Users\\${System.getenv().get("USERNAME")}\\Documents\\GitHub\\SwiftKit")
+include ':SwiftKit:basick'
+include ':SwiftKit:uicorek'
+include ':SwiftKit:debugk'
+include ':SwiftKit:underlayk'
+include ':SwiftKit:componentk'
+

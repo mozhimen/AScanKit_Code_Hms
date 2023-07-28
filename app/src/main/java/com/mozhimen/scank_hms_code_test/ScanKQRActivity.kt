@@ -10,7 +10,11 @@ import com.huawei.hms.hmsscankit.RemoteView
 import com.huawei.hms.ml.scan.HmsScan
 import com.mozhimen.basick.elemk.androidx.appcompat.bases.BaseActivityVB
 import com.mozhimen.basick.manifestk.cons.CPermission
+import com.mozhimen.basick.manifestk.permission.ManifestKPermission
 import com.mozhimen.basick.manifestk.permission.annors.APermissionCheck
+import com.mozhimen.basick.utilk.android.app.UtilKLaunchActivity
+import com.mozhimen.basick.utilk.android.view.UtilKScreen
+import com.mozhimen.basick.utilk.squareup.moshi.toJsonMoshi
 import com.mozhimen.scank_hms_code_test.databinding.ScankQrActivityBinding
 
 @APermissionCheck(CPermission.CAMERA, CPermission.READ_EXTERNAL_STORAGE)
@@ -23,11 +27,11 @@ class ScanKQRActivity : BaseActivityVB<ScankQrActivityBinding>() {
     private val _detectRect = Rect()
 
     override fun initData(savedInstanceState: Bundle?) {
-        PermissionK.initPermissions(this) {
+        ManifestKPermission.requestPermissions(this) {
             if (it) {
                 super.initData(savedInstanceState)
             } else {
-                PermissionK.applySetting(this)
+                UtilKLaunchActivity.startSettingAppDetails(this)
             }
         }
     }
@@ -55,8 +59,8 @@ class ScanKQRActivity : BaseActivityVB<ScankQrActivityBinding>() {
     }
 
     private fun initRect() {
-        val screenWidth = UtilKScreen.getScreenWidth()
-        val screenHeight = UtilKScreen.getScreenHeight()
+        val screenWidth = UtilKScreen.getCurrentWidth()
+        val screenHeight = UtilKScreen.getCurrentHeight()
         val rectSize = vb.scankQrScan.getRectSize()
 
         _detectRect.apply {
@@ -69,7 +73,7 @@ class ScanKQRActivity : BaseActivityVB<ScankQrActivityBinding>() {
 
     private fun onScanResult(hmsScan: HmsScan) {
         val intent = Intent()
-        intent.putExtra(SCANK_ACTIVITY_RESULT_PARAM, hmsScan.toJson())
+        intent.putExtra(SCANK_ACTIVITY_RESULT_PARAM, hmsScan.toJsonMoshi())
         setResult(Activity.RESULT_OK, intent)
         finish()
     }

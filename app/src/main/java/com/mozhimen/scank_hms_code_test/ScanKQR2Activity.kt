@@ -13,20 +13,23 @@ import androidx.camera.core.ImageProxy
 import com.huawei.hms.hmsscankit.ScanUtil
 import com.huawei.hms.ml.scan.HmsScan
 import com.huawei.hms.ml.scan.HmsScanAnalyzerOptions
-import com.mozhimen.basick.basek.BaseKActivityVB
-import com.mozhimen.basick.extsk.cropBitmap
-import com.mozhimen.basick.extsk.toJson
-import com.mozhimen.basick.utilk.UtilKBitmap
-import com.mozhimen.basick.utilk.UtilKScreen
-import com.mozhimen.componentk.cameraxk.annors.CameraXKFacing
-import com.mozhimen.componentk.cameraxk.helpers.ImageConverter
-import com.mozhimen.componentk.permissionk.PermissionK
-import com.mozhimen.componentk.permissionk.annors.PermissionKAnnor
-import com.mozhimen.scank_hms_code.databinding.ScankQr2ActivityBinding
-import java.util.concurrent.locks.ReentrantLock
+import com.mozhimen.basick.elemk.androidx.appcompat.bases.BaseActivityVB
+import com.mozhimen.basick.lintk.optin.OptInFieldCall_Close
+import com.mozhimen.basick.manifestk.cons.CPermission
+import com.mozhimen.basick.manifestk.permission.ManifestKPermission
+import com.mozhimen.basick.manifestk.permission.annors.APermissionCheck
+import com.mozhimen.basick.utilk.android.app.UtilKLaunchActivity
+import com.mozhimen.basick.utilk.android.graphics.UtilKBitmapCompress
+import com.mozhimen.basick.utilk.android.graphics.crop
+import com.mozhimen.basick.utilk.android.graphics.rotate
+import com.mozhimen.basick.utilk.android.view.UtilKScreen
+import com.mozhimen.basick.utilk.squareup.moshi.toJsonMoshi
+import com.mozhimen.componentk.camerak.camerax.commons.ICameraXKFrameListener
+import com.mozhimen.componentk.camerak.camerax.helpers.ImageProxyUtil
+import com.mozhimen.scank_hms_code_test.databinding.ScankQr2ActivityBinding
 
-@PermissionKAnnor(permissions = [Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE])
-class ScanKQR2Activity : BaseKActivityVB<ScankQr2ActivityBinding>() {
+@APermissionCheck(CPermission.CAMERA, CPermission.READ_EXTERNAL_STORAGE)
+class ScanKQR2Activity : BaseActivityVB<ScankQr2ActivityBinding>() {
     data class ScanK2Result(
         val hmsScan: HmsScan,
         val bitmap: Bitmap,
@@ -38,11 +41,11 @@ class ScanKQR2Activity : BaseKActivityVB<ScankQr2ActivityBinding>() {
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-        PermissionK.initPermissions(this) {
+        ManifestKPermission.requestPermissions(this) {
             if (it) {
-                initView(savedInstanceState)
+                super.initData(savedInstanceState)
             } else {
-                PermissionK.applySetting(this)
+                UtilKLaunchActivity.startSettingAppDetails(this)
             }
         }
     }
@@ -52,50 +55,60 @@ class ScanKQR2Activity : BaseKActivityVB<ScankQr2ActivityBinding>() {
     }
 
     private fun initCamera() {
-        vb.scankQr2Preview.initCamera(this, CameraXKFacing.BACK)
-        vb.scankQr2Preview.setImageAnalyzer(_frameAnalyzer)
-        vb.scankQr2Preview.startCamera()
+        vb.scankQr2Preview.apply {
+            initCameraX(this@ScanKQR2Activity)
+            setCameraXFrameListener(_frameAnalyzer)
+            startCameraX()
+        }
     }
 
     private fun onScanResult(scanK2Result: ScanK2Result) {
         val intent = Intent()
-        intent.putExtra(SCANK2_ACTIVITY_RESULT_PARAM, scanK2Result.toJson())
+        intent.putExtra(SCANK2_ACTIVITY_RESULT_PARAM, scanK2Result.toJsonMoshi())
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
 
-    private val _frameAnalyzer: ImageAnalysis.Analyzer by lazy {
-        object : ImageAnalysis.Analyzer {
-            private val _reentrantLock = ReentrantLock()
+    private val _ratio by lazy {
+        vb.scankQr2Qrscan.getRectSize().toDouble() / UtilKScreen.getCurrentWidth().toDouble()
+    }
+    private var _bitmap: Bitmap? = null
+    private var _lastTime = System.currentTimeMillis()
 
-            private val _options: HmsScanAnalyzerOptions = HmsScanAnalyzerOptions.Creator()
-                .setHmsScanTypes(HmsScan.QRCODE_SCAN_TYPE)
-                .setPhotoMode(true)
-                .create()
+    @OptIn(OptInFieldCall_Close::class)
+    private val _frameAnalyzer = object : ICameraXKFrameListener {
+        private val _options: HmsScanAnalyzerOptions = HmsScanAnalyzerOptions.Creator()
+            .setHmsScanTypes(HmsScan.QRCODE_SCAN_TYPE)
+            .setPhotoMode(true)
+            .create()
 
-            @SuppressLint("UnsafeOptInUsageError")
-            override fun analyze(image: ImageProxy) {
-                image.use { tmpImage ->
-                    val bitmap: Bitmap = if (tmpImage.format == ImageFormat.YUV_420_888) {
-                        ImageConverter.yuv2Bitmap(tmpImage)!!
+        @SuppressLint("UnsafeOptInUsageError")
+        override fun invoke(a: ImageProxy) {
+            a.use { imageProxy ->
+                if (System.currentTimeMillis() - _lastTime >= 2000) {
+                    _bitmap = if (imageProxy.format == ImageFormat.YUV_420_888) {
+                        ImageProxyUtil.yuv420888ImageProxy2JpegBitmap(imageProxy)!!
                     } else {
-                        ImageConverter.jpeg2Bitmap(tmpImage)
+                        ImageProxyUtil.jpegImageProxy2JpegBitmap(imageProxy)
+                    }.rotate(90).apply {
+                        crop(
+                            (_ratio * this.width).toInt(),
+                            (_ratio * this.width).toInt(),
+                            ((1 - _ratio) * this.width / 2).toInt(),
+                            ((this.height - _ratio * this.width) / 2).toInt()
+                        )
                     }
-                    val rotateBitmap = UtilKBitmap.rotateBitmap(bitmap, 90)
-                    val ratio: Double =
-                        vb.scankQr2Qrscan.getRectSize().toDouble() / UtilKScreen.getScreenWidth().toDouble()
-                    val cropBitmap = rotateBitmap.cropBitmap(
-                        (ratio * rotateBitmap.width).toInt(),
-                        (ratio * rotateBitmap.width).toInt(),
-                        ((1 - ratio) * rotateBitmap.width / 2).toInt(),
-                        ((rotateBitmap.height - ratio * rotateBitmap.width) / 2).toInt()
-                    )
 
                     //detect
-                    val results = ScanUtil.decodeWithBitmap(this@ScanKQR2Activity, cropBitmap, _options)
-                    if (results != null && results.isNotEmpty() && results[0] != null && !TextUtils.isEmpty(results[0].originalValue)) {
-                        onScanResult(ScanK2Result(results[0], cropBitmap, vb.scankQr2Qrscan.getRectSize()))
+                    _bitmap?.let {
+                        val results = ScanUtil.decodeWithBitmap(this@ScanKQR2Activity, it, _options)
+                        if (results != null && results.isNotEmpty() && results[0] != null && !TextUtils.isEmpty(results[0].originalValue)) {
+                            onScanResult(ScanK2Result(results[0], UtilKBitmapCompress.compressScaledBitmap(it, 50), vb.scankQr2Qrscan.getRectSize()))
+                        }
                     }
+
+                    //////////////////////////////////////////////////
+                    _lastTime = System.currentTimeMillis()
                 }
             }
         }
