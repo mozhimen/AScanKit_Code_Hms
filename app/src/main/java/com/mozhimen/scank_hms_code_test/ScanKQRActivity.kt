@@ -23,7 +23,7 @@ class ScanKQRActivity : BaseActivityVB<ScankQrActivityBinding>() {
         const val SCANK_ACTIVITY_RESULT_PARAM = "SCANK_ACTIVITY_RESULT_PARAM"
     }
 
-    private lateinit var _remoteView: RemoteView
+    private var _remoteView: RemoteView? = null
     private val _detectRect = Rect()
 
     override fun initData(savedInstanceState: Bundle?) {
@@ -42,14 +42,17 @@ class ScanKQRActivity : BaseActivityVB<ScankQrActivityBinding>() {
     }
 
     private fun initRemoteView(savedInstanceState: Bundle?) {
-        _remoteView = RemoteView.Builder().setContext(this).setBoundingBox(_detectRect)
-            .setFormat(HmsScan.QRCODE_SCAN_TYPE).build()
-        _remoteView.setOnResultCallback { results ->
+        _remoteView = RemoteView.Builder()
+            .setContext(this)
+            .setBoundingBox(_detectRect)
+            .setFormat(HmsScan.QRCODE_SCAN_TYPE, HmsScan.DATAMATRIX_SCAN_TYPE)
+            .build()
+        _remoteView!!.setOnResultCallback { results ->
             if (results != null && results.isNotEmpty() && results[0] != null && !TextUtils.isEmpty(results[0].originalValue)) {
                 onScanResult(results[0])
             }
         }
-        _remoteView.onCreate(savedInstanceState)
+        _remoteView!!.onCreate(savedInstanceState)
         vb.scankQrContainer.addView(
             _remoteView, FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
@@ -80,26 +83,26 @@ class ScanKQRActivity : BaseActivityVB<ScankQrActivityBinding>() {
 
     override fun onStart() {
         super.onStart()
-        _remoteView.onStart()
+        _remoteView?.onStart()
     }
 
     override fun onResume() {
         super.onResume()
-        _remoteView.onResume()
+        _remoteView?.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        _remoteView.onPause()
+        _remoteView?.onPause()
     }
 
     override fun onStop() {
         super.onStop()
-        _remoteView.onStop()
+        _remoteView?.onStop()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        _remoteView.onDestroy()
+        _remoteView?.onDestroy()
     }
 }
