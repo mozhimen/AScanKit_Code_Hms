@@ -18,7 +18,7 @@ import com.mozhimen.basick.manifestk.cons.CPermission
 import com.mozhimen.basick.manifestk.permission.ManifestKPermission
 import com.mozhimen.basick.manifestk.permission.annors.APermissionCheck
 import com.mozhimen.basick.utilk.android.app.UtilKLaunchActivity
-import com.mozhimen.basick.utilk.android.graphics.compressScaled
+import com.mozhimen.basick.utilk.android.graphics.anyBitmapCompressScaled
 import com.mozhimen.basick.utilk.android.graphics.crop
 import com.mozhimen.basick.utilk.android.graphics.rotate
 import com.mozhimen.basick.utilk.android.view.UtilKScreen
@@ -124,7 +124,7 @@ class ScanKQR2Activity : BaseActivityVB<ScankQr2ActivityBinding>() {
                     _bitmap?.let {
                         val results = ScanUtil.decodeWithBitmap(this@ScanKQR2Activity, it, _options)
                         if (results != null && results.isNotEmpty() && results[0] != null && !TextUtils.isEmpty(results[0].originalValue)) {
-                            onScanResult(ScanK2Result(results[0], it.compressScaled(50), vb.scankQr2Qrscan.getRectSize()))
+                            onScanResult(ScanK2Result(results[0], it.anyBitmapCompressScaled(50).(), vb.scankQr2Qrscan.getRectSize()))
                         }
                     }
 
