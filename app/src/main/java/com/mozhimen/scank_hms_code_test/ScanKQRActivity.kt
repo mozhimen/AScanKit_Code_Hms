@@ -14,7 +14,7 @@ import com.mozhimen.basick.manifestk.permission.ManifestKPermission
 import com.mozhimen.basick.manifestk.permission.annors.APermissionCheck
 import com.mozhimen.basick.utilk.android.app.UtilKLaunchActivity
 import com.mozhimen.basick.utilk.android.view.UtilKScreen
-import com.mozhimen.basick.utilk.squareup.moshi.toJsonMoshi
+import com.mozhimen.basick.utilk.google.gson.t2json
 import com.mozhimen.scank_hms_code_test.databinding.ScankQrActivityBinding
 
 @APermissionCheck(CPermission.CAMERA, CPermission.READ_EXTERNAL_STORAGE)
@@ -76,7 +76,7 @@ class ScanKQRActivity : BaseActivityVB<ScankQrActivityBinding>() {
 
     private fun onScanResult(hmsScan: HmsScan) {
         val intent = Intent()
-        intent.putExtra(SCANK_ACTIVITY_RESULT_PARAM, hmsScan.toJsonMoshi())
+        intent.putExtra(SCANK_ACTIVITY_RESULT_PARAM, hmsScan.t2json())
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
