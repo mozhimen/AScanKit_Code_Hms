@@ -1,4 +1,4 @@
-package com.mozhimen.scank_hms_code_test
+package com.mozhimen.scank_code_hms_test
 
 import android.app.Activity
 import android.content.Intent
@@ -15,7 +15,7 @@ import com.mozhimen.basick.manifestk.permission.annors.APermissionCheck
 import com.mozhimen.basick.utilk.android.app.UtilKLaunchActivity
 import com.mozhimen.basick.utilk.android.view.UtilKScreen
 import com.mozhimen.basick.utilk.google.gson.t2json
-import com.mozhimen.scank_hms_code_test.databinding.ScankQrActivityBinding
+import com.mozhimen.scank_code_hms_test.databinding.ScankQrActivityBinding
 
 @APermissionCheck(CPermission.CAMERA, CPermission.READ_EXTERNAL_STORAGE)
 class ScanKQRActivity : BaseActivityVB<ScankQrActivityBinding>() {

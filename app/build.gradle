@@ -39,8 +39,8 @@ dependencies {
     implementation project(':SwiftKit:basick')
     implementation project(':SwiftKit:componentk')
     implementation project(':SwiftKit:uicorek')
+    implementation project(':scank_code_hms')
 
-    implementation project(':scank_hms_code')
 
     //test
     testImplementation 'junit:junit:4.13.2'

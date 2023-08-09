@@ -1,4 +1,4 @@
-package com.mozhimen.scank_hms_code_test
+package com.mozhimen.scank_code_hms_test
 
 import android.app.Activity
 import android.content.Intent
@@ -8,7 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.huawei.hms.ml.scan.HmsScan
 import com.mozhimen.basick.elemk.androidx.appcompat.bases.BaseActivityVB
 import com.mozhimen.basick.utilk.google.gson.json2t
-import com.mozhimen.scank_hms_code_test.databinding.ActivityMainBinding
+import com.mozhimen.scank_code_hms_test.databinding.ActivityMainBinding
 
 class MainActivity : BaseActivityVB<ActivityMainBinding>() {
     override fun initView(savedInstanceState: Bundle?) {

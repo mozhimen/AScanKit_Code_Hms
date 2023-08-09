@@ -1,4 +1,4 @@
-package com.mozhimen.scank_hms
+package com.mozhimen.scank_code_hms
 
 import org.junit.Test
 

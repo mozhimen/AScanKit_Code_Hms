@@ -1,4 +1,4 @@
-package com.mozhimen.scank_hms
+package com.mozhimen.scank_code_hms
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

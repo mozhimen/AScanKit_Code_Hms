@@ -9,9 +9,9 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "ScanKit_Hms_Code"
+rootProject.name = "ScanKit_Code_Hms"
 include ':app'
-include ':scank_hms_code'
+include ':scank_code_hms'
 include ':SwiftKit'
 project(':SwiftKit').projectDir = new File("C:\\Users\\${System.getenv().get("USERNAME")}\\Documents\\GitHub\\SwiftKit")
 include ':SwiftKit:basick'

@@ -1,4 +1,4 @@
-package com.mozhimen.scank_hms_code_test
+package com.mozhimen.scank_code_hms_test
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -26,7 +26,7 @@ import com.mozhimen.basick.utilk.google.gson.t2json
 import com.mozhimen.componentk.camerak.camerax.commons.ICameraXKFrameListener
 import com.mozhimen.componentk.camerak.camerax.helpers.jpegImageProxy2JpegBitmap
 import com.mozhimen.componentk.camerak.camerax.helpers.yuv420888ImageProxy2JpegBitmap
-import com.mozhimen.scank_hms_code_test.databinding.ScankQr2ActivityBinding
+import com.mozhimen.scank_code_hms_test.databinding.ScankQr2ActivityBinding
 
 @APermissionCheck(CPermission.CAMERA, CPermission.READ_EXTERNAL_STORAGE)
 class ScanKQR2Activity : BaseActivityVB<ScankQr2ActivityBinding>() {
