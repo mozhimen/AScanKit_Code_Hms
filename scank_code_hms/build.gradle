@@ -33,6 +33,8 @@ android {
 }
 
 dependencies {
+    implementation 'com.github.mozhimen.SwiftKit:basick:1.2.3'
+
     //scank
     api 'com.huawei.hms:scanplus:2.11.0.300'
 
