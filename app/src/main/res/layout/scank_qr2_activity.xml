@@ -10,12 +10,12 @@
         android:layout_height="match_parent"
         tools:context=".scank.ScanKQR2Activity">
 
-        <com.mozhimen.componentk.camerak.camerax.CameraKXLayout
+        <com.mozhimen.camerak.camerax.CameraKXLayout
             android:id="@+id/scank_qr2_preview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <com.mozhimen.uicorek.viewk.scan.ViewKScanQR
+        <com.mozhimen.xmlk.viewk.scan.ViewKScanQR
             android:id="@+id/scank_qr2_qrscan"
             android:layout_width="200dp"
             android:layout_height="200dp"

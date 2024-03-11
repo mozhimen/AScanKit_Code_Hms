@@ -5,6 +5,7 @@ plugins {
 }
 
 android {
+    namespace "com.mozhimen.scank.code.hms.test"
     compileSdk rootProject.android.compileSdk
 
     defaultConfig {
@@ -37,8 +38,9 @@ android {
 
 dependencies {
     implementation project(':SwiftKit:basick')
-    implementation project(':SwiftKit:componentk')
-    implementation project(':SwiftKit:uicorek')
+    implementation project(':SwiftKit:xmlk')
+    implementation project(':ACameraKit_CameraX:camerak_camerax')
+    implementation project(':AXmlKit:viewk')
     implementation project(':scank_code_hms')
 
 

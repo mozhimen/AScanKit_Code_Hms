@@ -5,11 +5,12 @@ plugins {
 }
 
 android {
-    compileSdk rootProject.android.compileSdk
+    namespace "com.mozhimen.scank.code.hms"
+    compileSdk 34
 
     defaultConfig {
-        minSdk rootProject.android.minSdk
-        targetSdk rootProject.android.targetSdk
+        minSdk 19
+        targetSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -33,7 +34,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.mozhimen.SwiftKit:basick:1.2.3'
+    implementation project(':SwiftKit:basick')
 
     //scank
     api 'com.huawei.hms:scanplus:2.11.0.300'

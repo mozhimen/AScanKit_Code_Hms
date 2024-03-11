@@ -1,4 +1,4 @@
-package com.mozhimen.scankit
+package com.mozhimen.scank.code.hms.test
 
 import org.junit.Test
 

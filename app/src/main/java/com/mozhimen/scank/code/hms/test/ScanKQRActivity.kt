@@ -1,4 +1,4 @@
-package com.mozhimen.scank_code_hms_test
+package com.mozhimen.scank.code.hms.test
 
 import android.app.Activity
 import android.content.Intent
@@ -8,17 +8,17 @@ import android.text.TextUtils
 import android.widget.FrameLayout
 import com.huawei.hms.hmsscankit.RemoteView
 import com.huawei.hms.ml.scan.HmsScan
-import com.mozhimen.basick.elemk.androidx.appcompat.bases.BaseActivityVB
+import com.mozhimen.basick.elemk.androidx.appcompat.bases.databinding.BaseActivityVDB
 import com.mozhimen.basick.manifestk.cons.CPermission
 import com.mozhimen.basick.manifestk.permission.ManifestKPermission
 import com.mozhimen.basick.manifestk.permission.annors.APermissionCheck
 import com.mozhimen.basick.utilk.android.app.UtilKLaunchActivity
 import com.mozhimen.basick.utilk.android.view.UtilKScreen
-import com.mozhimen.basick.utilk.google.gson.t2json
-import com.mozhimen.scank_code_hms_test.databinding.ScankQrActivityBinding
+import com.mozhimen.basick.utilk.google.gson.t2strJsonGson
+import com.mozhimen.scank.code.hms.test.databinding.ScankQrActivityBinding
 
 @APermissionCheck(CPermission.CAMERA, CPermission.READ_EXTERNAL_STORAGE)
-class ScanKQRActivity : BaseActivityVB<ScankQrActivityBinding>() {
+class ScanKQRActivity : BaseActivityVDB<ScankQrActivityBinding>() {
     companion object {
         const val SCANK_ACTIVITY_RESULT_PARAM = "SCANK_ACTIVITY_RESULT_PARAM"
     }
@@ -53,7 +53,7 @@ class ScanKQRActivity : BaseActivityVB<ScankQrActivityBinding>() {
             }
         }
         _remoteView!!.onCreate(savedInstanceState)
-        vb.scankQrContainer.addView(
+        vdb.scankQrContainer.addView(
             _remoteView, FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT
@@ -62,9 +62,9 @@ class ScanKQRActivity : BaseActivityVB<ScankQrActivityBinding>() {
     }
 
     private fun initRect() {
-        val screenWidth = UtilKScreen.getCurrentWidth()
-        val screenHeight = UtilKScreen.getCurrentHeight()
-        val rectSize = vb.scankQrScan.getRectSize()
+        val screenWidth = UtilKScreen.getWidth_ofSysMetrics()
+        val screenHeight = UtilKScreen.getHeight_ofSysMetrics()
+        val rectSize = vdb.scankQrScan.getRectSize()
 
         _detectRect.apply {
             left = (screenWidth - rectSize) / 2
@@ -76,7 +76,7 @@ class ScanKQRActivity : BaseActivityVB<ScankQrActivityBinding>() {
 
     private fun onScanResult(hmsScan: HmsScan) {
         val intent = Intent()
-        intent.putExtra(SCANK_ACTIVITY_RESULT_PARAM, hmsScan.t2json())
+        intent.putExtra(SCANK_ACTIVITY_RESULT_PARAM, hmsScan.t2strJsonGson())
         setResult(Activity.RESULT_OK, intent)
         finish()
     }

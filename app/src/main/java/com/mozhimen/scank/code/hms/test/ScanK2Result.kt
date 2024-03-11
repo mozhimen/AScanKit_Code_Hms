@@ -1,4 +1,4 @@
-package com.mozhimen.scank_code_hms_test
+package com.mozhimen.scank.code.hms.test
 
 import android.graphics.Bitmap
 import com.huawei.hms.ml.scan.HmsScan

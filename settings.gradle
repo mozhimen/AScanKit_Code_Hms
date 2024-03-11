@@ -9,14 +9,20 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "ScanKit_Code_Hms"
+rootProject.name = "AScanKit_Code_Hms"
 include ':app'
 include ':scank_code_hms'
+//SwiftKit
 include ':SwiftKit'
-project(':SwiftKit').projectDir = new File("C:\\Users\\${System.getenv().get("USERNAME")}\\Documents\\GitHub\\SwiftKit")
+project(':SwiftKit').projectDir = new File("D:\\WorkSpace\\GitHub\\SwiftKit")
 include ':SwiftKit:basick'
-include ':SwiftKit:uicorek'
-include ':SwiftKit:debugk'
-include ':SwiftKit:underlayk'
-include ':SwiftKit:componentk'
+include ':SwiftKit:xmlk'
+//ACameraKit_CameraX
+include ':ACameraKit_CameraX'
+project(':ACameraKit_CameraX').projectDir = new File("D:\\WorkSpace\\GitHub\\ACameraKit_CameraX")
+include ':ACameraKit_CameraX:camerak_camerax'
+//AXmlKit
+include ':AXmlKit'
+project(':AXmlKit').projectDir = new File("D:\\WorkSpace\\GitHub\\AXmlKit")
+include ':AXmlKit:viewk'
 

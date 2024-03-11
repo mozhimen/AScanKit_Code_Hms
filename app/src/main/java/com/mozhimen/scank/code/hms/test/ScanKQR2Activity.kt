@@ -1,4 +1,4 @@
-package com.mozhimen.scank_code_hms_test
+package com.mozhimen.scank.code.hms.test
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -8,25 +8,26 @@ import android.graphics.ImageFormat
 import android.os.Bundle
 import android.util.Log
 import androidx.camera.core.ImageProxy
-import com.mozhimen.basick.elemk.androidx.appcompat.bases.BaseActivityVB
-import com.mozhimen.basick.lintk.optin.OptInFieldCall_Close
+import com.mozhimen.basick.elemk.androidx.appcompat.bases.databinding.BaseActivityVDB
+import com.mozhimen.basick.lintk.optins.OFieldCall_Close
+import com.mozhimen.basick.lintk.optins.permission.OPermission_CAMERA
 import com.mozhimen.basick.manifestk.cons.CPermission
 import com.mozhimen.basick.manifestk.permission.ManifestKPermission
 import com.mozhimen.basick.manifestk.permission.annors.APermissionCheck
 import com.mozhimen.basick.utilk.android.app.UtilKLaunchActivity
-import com.mozhimen.basick.utilk.android.graphics.applyAnyBitmapCrop
-import com.mozhimen.basick.utilk.android.graphics.applyAnyBitmapRotate
-import com.mozhimen.basick.utilk.android.graphics.compressAnyBitmapScaled
+import com.mozhimen.basick.utilk.android.graphics.applyBitmapAnyCrop
+import com.mozhimen.basick.utilk.android.graphics.applyBitmapAnyRotate
+import com.mozhimen.basick.utilk.android.graphics.compressBitmapAnyScaled
 import com.mozhimen.basick.utilk.android.view.UtilKScreen
-import com.mozhimen.basick.utilk.google.gson.t2json
-import com.mozhimen.componentk.camerak.camerax.commons.ICameraXKFrameListener
-import com.mozhimen.componentk.camerak.camerax.helpers.jpegImageProxy2JpegBitmap
-import com.mozhimen.componentk.camerak.camerax.helpers.yuv420888ImageProxy2JpegBitmap
-import com.mozhimen.scank_code_hms.ScanKCodeHms
-import com.mozhimen.scank_code_hms_test.databinding.ScankQr2ActivityBinding
+import com.mozhimen.basick.utilk.google.gson.t2strJsonGson
+import com.mozhimen.camerak.camerax.commons.ICameraXKFrameListener
+import com.mozhimen.camerak.camerax.utils.imageProxyJpeg2bitmapJpeg
+import com.mozhimen.camerak.camerax.utils.imageProxyYuv4208882bitmapJpeg
+import com.mozhimen.scank.code.hms.ScanKCodeHms
+import com.mozhimen.scank.code.hms.test.databinding.ScankQr2ActivityBinding
 
 @APermissionCheck(CPermission.CAMERA, CPermission.READ_EXTERNAL_STORAGE)
-class ScanKQR2Activity : BaseActivityVB<ScankQr2ActivityBinding>() {
+class ScanKQR2Activity : BaseActivityVDB<ScankQr2ActivityBinding>() {
 
     companion object {
         const val SCANK2_ACTIVITY_RESULT_PARAM = "SCANK2_ACTIVITY_RESULT_PARAM"
@@ -46,29 +47,29 @@ class ScanKQR2Activity : BaseActivityVB<ScankQr2ActivityBinding>() {
         initCamera()
     }
 
+    @OptIn(OPermission_CAMERA::class)
     private fun initCamera() {
-        vb.scankQr2Preview.apply {
-            initCameraX(this@ScanKQR2Activity)
+        vdb.scankQr2Preview.apply {
+            initCameraKX(this@ScanKQR2Activity)
             setCameraXFrameListener(_frameAnalyzer)
-            startCameraX()
         }
     }
 
     private fun onScanResult(scanK2Result: ScanK2Result) {
         Log.d(TAG, "onScanResult: scanK2Result $scanK2Result")
         val intent = Intent()
-        intent.putExtra(SCANK2_ACTIVITY_RESULT_PARAM, scanK2Result.t2json())
+        intent.putExtra(SCANK2_ACTIVITY_RESULT_PARAM, scanK2Result.t2strJsonGson())
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
 
     private val _ratio by lazy {
-        vb.scankQr2Qrscan.getRectSize().toDouble() / UtilKScreen.getCurrentWidth().toDouble()
+        vdb.scankQr2Qrscan.getRectSize().toDouble() / UtilKScreen.getWidth_ofSysMetrics().toDouble()
     }
     private var _bitmap: Bitmap? = null
     private var _lastTime = System.currentTimeMillis()
 
-    @OptIn(OptInFieldCall_Close::class)
+    @OptIn(OFieldCall_Close::class)
     private val _frameAnalyzer = object : ICameraXKFrameListener {
 
         @SuppressLint("UnsafeOptInUsageError")
@@ -76,11 +77,11 @@ class ScanKQR2Activity : BaseActivityVB<ScankQr2ActivityBinding>() {
             a.use { imageProxy ->
                 if (System.currentTimeMillis() - _lastTime >= 2000) {
                     _bitmap = if (imageProxy.format == ImageFormat.YUV_420_888) {
-                        imageProxy.yuv420888ImageProxy2JpegBitmap()
+                        imageProxy.imageProxyYuv4208882bitmapJpeg()
                     } else {
-                        imageProxy.jpegImageProxy2JpegBitmap()
-                    }.applyAnyBitmapRotate(90f).apply {
-                        applyAnyBitmapCrop(
+                        imageProxy.imageProxyJpeg2bitmapJpeg()
+                    }.applyBitmapAnyRotate(90f).apply {
+                        applyBitmapAnyCrop(
                                 (_ratio * this.width).toInt(),
                                 (_ratio * this.width).toInt(),
                                 ((1 - _ratio) * this.width / 2).toInt(),
@@ -92,7 +93,7 @@ class ScanKQR2Activity : BaseActivityVB<ScankQr2ActivityBinding>() {
                     _bitmap?.let {
                         val result = ScanKCodeHms.instance.codeRecognition(it)
                         if (result != null) {
-                            onScanResult(ScanK2Result(result, it.compressAnyBitmapScaled(50), vb.scankQr2Qrscan.getRectSize()))
+                            onScanResult(ScanK2Result(result, it.compressBitmapAnyScaled(50), vdb.scankQr2Qrscan.getRectSize()))
                         }
                     }
 
